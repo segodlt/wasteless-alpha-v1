@@ -15,89 +15,11 @@ ActiveRecord::Schema.define(version: 2020_10_13_134315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "favorites", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "recipe_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["recipe_id"], name: "index_favorites_on_recipe_id"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
-  create_table "groceries", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "measure_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["measure_id"], name: "index_groceries_on_measure_id"
-    t.index ["user_id"], name: "index_groceries_on_user_id"
-  end
-
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
     t.text "alert"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "measures", force: :cascade do |t|
-    t.decimal "quantity"
-    t.boolean "required"
-    t.bigint "ingredient_id", null: false
-    t.bigint "recipe_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ingredient_id"], name: "index_measures_on_ingredient_id"
-    t.index ["recipe_id"], name: "index_measures_on_recipe_id"
-  end
-
-  create_table "recipes", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.bigint "user_id", null: false
-    t.bigint "category_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_recipes_on_category_id"
-    t.index ["user_id"], name: "index_recipes_on_user_id"
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.text "content"
-    t.decimal "rating"
-    t.bigint "user_id", null: false
-    t.bigint "recipe_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["recipe_id"], name: "index_reviews_on_recipe_id"
-    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "units", force: :cascade do |t|
@@ -123,10 +45,4 @@ ActiveRecord::Schema.define(version: 2020_10_13_134315) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "favorites", "recipes"
-  add_foreign_key "groceries", "measures"
-  add_foreign_key "measures", "recipes"
-  add_foreign_key "recipes", "categories"
-  add_foreign_key "reviews", "recipes"
 end
