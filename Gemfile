@@ -22,8 +22,10 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-#Devise
+#Install gems
 gem 'devise'
+gem 'simple_form'
+
 
 #cloudinary
 gem 'cloudinary', '~> 1.16.0'
