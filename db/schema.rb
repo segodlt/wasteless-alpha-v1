@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_13_142953) do
+ActiveRecord::Schema.define(version: 2020_10_13_143333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(version: 2020_10_13_142953) do
     t.text "alert"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "measures", force: :cascade do |t|
+    t.integer "quantity"
+    t.boolean "optionnal"
+    t.bigint "ingredient_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "unit_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ingredient_id"], name: "index_measures_on_ingredient_id"
+    t.index ["unit_id"], name: "index_measures_on_unit_id"
+    t.index ["user_id"], name: "index_measures_on_user_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -64,6 +77,9 @@ ActiveRecord::Schema.define(version: 2020_10_13_142953) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "measures", "ingredients"
+  add_foreign_key "measures", "units"
+  add_foreign_key "measures", "users"
   add_foreign_key "recipes", "categories"
   add_foreign_key "recipes", "users"
 end
